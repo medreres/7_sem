@@ -1,0 +1,1 @@
+Run `curl http://localhost:3000/products/1`
