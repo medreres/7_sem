@@ -1,0 +1,10 @@
+services:
+  database:
+    image: postgis/postgis:16-3.4-alpine
+    ports:
+      - ${DATABASE_PORT}:5432
+   
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
