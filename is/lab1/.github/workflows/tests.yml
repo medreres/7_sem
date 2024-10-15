@@ -1,0 +1,65 @@
+name: tests
+run-name: ${{ github.actor }} has pushed commits
+
+on: [push]
+
+env:
+  # * those variables duplicate from .env.test in order to run docker compose for database
+  # TODO find a way to avoid duplication of variables
+  DATABASE_HOST: localhost
+  DATABASE_PORT: 5432
+  DATABASE_USERNAME: admin
+  DATABASE_PASSWORD: h1sp0stgr3s
+  DATABASE_NAME: hispec-api
+ 
+jobs:
+  integration:
+    services:
+       database:
+        image: postgis/postgis:16-3.4-alpine
+        env:
+          POSTGRES_PASSWORD: h1sp0stgr3s
+          POSTGRES_DB: hispec-api
+          POSTGRES_USER: admin
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          node-version-file: '.nvmrc'
+      
+      - run: npm ci
+
+      - name: Run tests
+        run: npm run test:integration
+
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          node-version-file: '.nvmrc'
+      
+      - run: npm ci
+
+      - name: Run tests
+        run: npm run lint
+      
