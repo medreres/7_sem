@@ -1,0 +1,33 @@
+name: SonarQube Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  sonar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run SonarQube scan
+        env:
+          SONAR_TOKEN: sqp_b60ea7ceea8d175d8a67f01419c17b2a8df398e2
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=fp \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.login=sqp_b60ea7ceea8d175d8a67f01419c17b2a8df398e2
