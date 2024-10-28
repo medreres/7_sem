@@ -29,5 +29,5 @@ jobs:
           npx sonar-scanner \
             -Dsonar.projectKey=fp \
             -Dsonar.sources=. \
-            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.host.url=https://fc07-195-72-147-12.ngrok-free.app \
             -Dsonar.login=sqp_b60ea7ceea8d175d8a67f01419c17b2a8df398e2

@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": " NEW_RELIC_APP_NAME=fp NEW_RELIC_LICENSE_KEY=d53cc5b3540e558b04879c9e9213bb29FFFFNRAL nodemon --exec tsx index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sonar": "node sonar-project.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
