@@ -6,6 +6,8 @@ import { SubSubCategoryEntity } from '../category/entities/sub-sub-category.enti
 import { InvoiceEntity } from '../invoice/entities/invoice.entity.js';
 import { LogEntity } from '../logs/entities/log.entity.js';
 import { NotificationEntity } from '../notification/entities/notification.entity.js';
+import { OrderEntity } from '../order/enttities/order.entity.js';
+import { OrderItemEntity } from '../order/enttities/order-item.entity.js';
 import { PointTransactionEntity } from '../point-transaction/entities/point-transaction.entity.js';
 import { ProductEntity } from '../product/entities/product.entity.js';
 import { ProductCharacteristicEntity } from '../product/entities/product-characteristic.entity.js';
@@ -32,4 +34,6 @@ export const entities = [
   LogEntity,
   ShopEntity,
   NotificationEntity,
+  OrderEntity,
+  OrderItemEntity,
 ];

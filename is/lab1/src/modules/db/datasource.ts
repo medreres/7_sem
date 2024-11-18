@@ -10,10 +10,10 @@ import { NodeEnv } from '../config/schema.js';
 export const dataSourceConfig: DataSourceOptions = {
   type: 'postgres',
   url: appConfig.databaseUrl,
-  synchronize: false,
+  synchronize: true,
   entities,
-  migrations: [Initial1728062331033, AddFilesUrlToProduct1728644798952],
-  migrationsRun: true,
+  // migrations: [Initial1728062331033, AddFilesUrlToProduct1728644798952],
+  // migrationsRun: true,
   migrationsTableName: 'migrations',
   migrationsTransactionMode: 'all',
   ssl:

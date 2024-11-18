@@ -18,7 +18,7 @@ export class DbModule {
             return {
               type: 'postgres',
               synchronize: true,
-              migrationsRun: true,
+              // migrationsRun: true,
               entities,
               host: process.env.DATABASE_HOST,
               port: process.env.DATABASE_PORT,
