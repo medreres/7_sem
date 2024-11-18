@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Box, H1, H2, Section } from '@adminjs/design-system';
+import { Box, H1, Section, Text } from '@adminjs/design-system';
 import { ApiClient } from 'adminjs';
 import {
   ArcElement,
@@ -28,7 +28,7 @@ ChartJS.register(
   Legend,
 );
 
-const CombinedDashboard = () => {
+const Dashboard = () => {
   const api = new ApiClient();
 
   const [userStatusChartData, setUserStatusChartData] = useState({
@@ -46,96 +46,144 @@ const CombinedDashboard = () => {
     counts: [],
   });
 
+  const [topProductsChartData, setTopProductsChartData] = useState({
+    labels: [],
+    orders: [],
+  });
+
   useEffect(() => {
     api.getDashboard().then((response) => {
       setUserStatusChartData(response.data.userStatusChartData);
       setPointsChartData(response.data.pointsChartData);
       setClaimsChartData(response.data.claimsChartData);
+      setTopProductsChartData(response.data.topProductsChartData);
     });
   }, []);
-
-  const userStatusData = {
-    labels: userStatusChartData.labels,
-    datasets: [
-      {
-        label: 'User Status Distribution',
-        data: userStatusChartData.percentages,
-        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
-        hoverBackgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
-      },
-    ],
-  };
-
-  const pointsData = {
-    labels: pointsChartData.labels,
-    datasets: [
-      {
-        label: 'Average Points Earned Per Day',
-        data: pointsChartData.averages,
-        fill: false,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-      },
-    ],
-  };
-
-  const claimsData = {
-    labels: claimsChartData.labels,
-    datasets: [
-      {
-        label: 'Claims Made Per Day',
-        data: claimsChartData.counts,
-        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-      },
-    ],
-  };
 
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart',
-      },
+      legend: { position: 'top', labels: { font: { size: 14 } } },
+      title: { display: true, text: 'Chart', font: { size: 18 } },
     },
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
+    scales: { y: { beginAtZero: true } },
+  };
+
+  const cardStyle = {
+    padding: '20px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    borderRadius: '8px',
+    marginBottom: '20px',
   };
 
   return (
-    <Box
-      variant="grey"
-      padding="lg"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gridGap: '20px',
-      }}
-    >
+    <Box variant="grey" padding="lg">
       <H1>Admin Dashboard</H1>
-      <Section style={{ gridRow: '2' }}>
-        <H2>Points Earned Per Day</H2>
-        <Line data={pointsData} options={options} />
-      </Section>
-      <Section style={{ gridRow: '2' }}>
-        <H2>Claims Made Per Day</H2>
-        <Bar data={claimsData} options={options} />
-      </Section>
-      <Section style={{ gridRow: '3' }}>
-        <H2>User Status Distribution</H2>
-        <Pie data={userStatusData} />
-      </Section>
+      <Text
+        style={{
+          marginBottom: '40px',
+          fontSize: '16px',
+          color: '#555',
+          textAlign: 'center',
+        }}
+      >
+        Welcome to the admin dashboard! Here's a detailed overview of activity.
+      </Text>
+
+      <Box
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridGap: '20px',
+        }}
+      >
+        <Section style={{ ...cardStyle, gridColumn: '1 / -1' }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: '18px',
+              marginBottom: '10px',
+            }}
+          >
+            Points Earned Per Day
+          </Text>
+          <Line
+            data={{
+              labels: pointsChartData.labels,
+              datasets: [
+                {
+                  label: 'Average Points',
+                  data: pointsChartData.averages,
+                  fill: false,
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  tension: 0.1,
+                },
+              ],
+            }}
+            options={options}
+          />
+        </Section>
+
+        <Section style={cardStyle}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: '18px',
+              marginBottom: '10px',
+            }}
+          >
+            Claims Made Per Day
+          </Text>
+          <Bar
+            data={{
+              labels: claimsChartData.labels,
+              datasets: [
+                {
+                  label: 'Claims',
+                  data: claimsChartData.counts,
+                  backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            options={options}
+          />
+        </Section>
+        <Section style={cardStyle}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: '18px',
+              marginBottom: '10px',
+            }}
+          >
+            User Status Distribution
+          </Text>
+          <Pie
+            data={{
+              labels: userStatusChartData.labels,
+              datasets: [
+                {
+                  label: 'User Status',
+                  data: userStatusChartData.percentages,
+                  backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
+                  hoverBackgroundColor: [
+                    '#ff6384',
+                    '#36a2eb',
+                    '#cc65fe',
+                    '#ffce56',
+                  ],
+                },
+              ],
+            }}
+          />
+        </Section>
+      </Box>
     </Box>
   );
 };
 
-export default CombinedDashboard;
+export default Dashboard;
