@@ -19,16 +19,16 @@ AdminJS.registerAdapter({
         useFactory: () => {
           return {
             adminJsOptions: adminOptions,
-            // auth: {
-            //   cookieName: 'adminjs',
-            //   cookiePassword: 'adminjs',
-            //   provider,
-            // },
-            // sessionOptions: {
-            //   resave: true,
-            //   saveUninitialized: true,
-            //   secret: 'secret',
-            // },
+            auth: {
+              cookieName: 'adminjs',
+              cookiePassword: 'adminjs',
+              provider,
+            },
+            sessionOptions: {
+              resave: true,
+              saveUninitialized: true,
+              secret: 'secret',
+            },
           };
         },
       }),

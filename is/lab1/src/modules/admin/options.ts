@@ -1,8 +1,11 @@
+// @ts-nocheck
 import { AdminJSOptions } from 'adminjs';
 
 import { componentLoader, components } from './components/index.js';
 import resources from './resources/index.js';
 
+import { OrderEntity } from '../order/enttities/order.entity.js';
+import { OrderItemEntity } from '../order/enttities/order-item.entity.js';
 import { PointTransactionEntity } from '../point-transaction/entities/point-transaction.entity.js';
 import { ClaimEntity } from '../reward/entities/claim.entity.js';
 import { UserEntity } from '../user/entities/user.entity.js';
@@ -22,6 +25,8 @@ export const adminOptions: AdminJSOptions = {
       const pointRepository = PointTransactionEntity.getRepository();
       const claimRepository = ClaimEntity.getRepository();
       const userRepository = UserEntity.getRepository();
+      const orderRepository = OrderEntity.getRepository();
+      const orderItemRepository = OrderItemEntity.getRepository();
 
       // Fetch average points per day
       const pointsData = await pointRepository
@@ -70,6 +75,7 @@ export const adminOptions: AdminJSOptions = {
         },
       };
     },
+
     component: components.Dashboard,
   },
   // pages: {
