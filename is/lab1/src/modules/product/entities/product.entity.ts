@@ -25,6 +25,9 @@ export class ProductEntity extends BaseEntity implements WithAttachment {
   @Column({ type: 'varchar', unique: true, nullable: false })
   code: string;
 
+  @Column({ type: 'int' })
+  price: string;
+
   @Column({ type: 'varchar', unique: true, nullable: false })
   productInternalId: string;
 

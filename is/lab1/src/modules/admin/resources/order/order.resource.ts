@@ -25,12 +25,39 @@ export const createOrderResource = (): Resource<OrderEntity> => ({
     },
     id: ORDER_RESOURCE_ID,
     properties: {
-      // orderDate: { isVisible: { list: true, filter: true, show: true } },
       userId: {
         reference: USER_RESOURCE_ID,
       },
       orderItems: {
         reference: ORDER_ITEM_RESOURCE_ID,
+      },
+      total: {
+        type: 'currency',
+      },
+    },
+    actions: {
+      show: {
+        after: async (response, request, context) => {
+          const order = context.record.params;
+
+          // Fetch order items with product prices
+          const orderItems = await OrderItemEntity.find({
+            where: { orderId: order.id },
+            relations: ['product'],
+          });
+
+          // Calculate total
+          const total = orderItems.reduce(
+            // @ts-expect-error
+            (sum, item) => sum + item.quantity * item.product.price,
+            0,
+          );
+
+          // Attach total to the record
+          response.record.params.total = total / 100; // Convert cents to currency
+
+          return response;
+        },
       },
     },
   },

@@ -14,9 +14,6 @@ import { UserEntity } from '../../user/entities/user.entity.js';
 
 @Entity('order')
 export class OrderEntity extends BaseEntity {
-  // @Column({ type: 'timestamptz' })
-  // orderDate: Date;
-
   @ManyToOne(() => UserEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: Relation<UserEntity>;
