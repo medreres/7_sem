@@ -15,10 +15,12 @@ export const adminOptions: AdminJSOptions = {
   rootPath: '/admin',
   resources: resources.map((resource) => resource()),
   branding: {
-    companyName: 'IPS-41',
-    logo: 'https://www.google.com/u/0/ac/images/logo.gif?uid=100029193258489271529&service=google_gsuite',
-    favicon:
-      'https://lh5.googleusercontent.com/proxy/5rC6f4VPyTT0ObNLggYn48Jg60BEh60qPWZAt4n7nKplWHPxrOe5M-F82iyRuGRUhhs-FkO-SlLwsrY-bxA2htE7tD9rzA6xsHnrAN_Z5jsxiOlVYx9NCUuq',
+    withMadeWithLove: false,
+    companyName: 'КН-2325Б',
+    favicon: 'https://dspu.edu.ua/wp-content/uploads/2020/02/gerb.png',
+  },
+  assets: {
+    styles: [''], // here you can hide the default images and re-position the boxes or text.
   },
   dashboard: {
     handler: async () => {

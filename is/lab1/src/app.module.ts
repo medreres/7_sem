@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { SentryModule } from '@sentry/nestjs/setup';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { AppController } from './app.controller.js';
 import { AdminModule } from './modules/admin/admin.module.js';
@@ -22,8 +25,14 @@ import { ShopModule } from './modules/shop/shop.module.js';
 import { SupportModule } from './modules/support/support.module.js';
 import { UserModule } from './modules/user/user.module.js';
 
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
+
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', '../public'),
+    }),
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
