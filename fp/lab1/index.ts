@@ -25,6 +25,7 @@ console.log('res', res.toQuery())
 
 // Define the GET /products/{productId} route
 app.get('/products/:productId', (req, res) => {
+  console.debug(`getting product ${req.params.productId}`)
     const productId = req.params.productId;
     const product = {
         id: productId,

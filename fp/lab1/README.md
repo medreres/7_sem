@@ -16,3 +16,8 @@ NRAK-42AFUQ0WUM90VY428P12845W7BF
 
 license key
 d53cc5b3540e558b04879c9e9213bb29FFFFNRAL
+
+
+# To run k6 tests
+` k6 run --out influxdb=http://localhost:8086 test.ts`
+https://github.com/medreres/FP/actions/runs/12045246342/job/33583534394 -- successfull start

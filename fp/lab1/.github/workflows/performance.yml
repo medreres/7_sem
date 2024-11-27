@@ -3,24 +3,39 @@ name: Performance Test
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
-  k6-test:
+  performance-test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install k6
-      run: sudo apt-get install -y k6
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16 # Вкажіть версію Node.js, яку використовує ваш проєкт
 
-    - name: Run k6 test
-      run: k6 run test.js --out json=results.json
+      - name: Install dependencies
+        run: npm install
 
-    - name: Upload test results
-      uses: actions/upload-artifact@v3
-      with:
-        name: k6-results
-        path: results.json
+      - name: Start Node.js application
+        run: npm run dev &
+        # Використовуємо `&`, щоб запустити додаток у фоновому режимі
+
+      - name: Install k6
+        run: |
+          sudo apt update
+          sudo apt install -y gnupg software-properties-common
+          curl -s https://dl.k6.io/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/k6-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt update
+          sudo apt install -y k6
+
+      - name: Run performance test and save to InfluxDB
+        # env: # Передаємо токен та інші налаштування через змінні середовища
+          # K6_INFLUXDB_ORGANIZATION: my-org        # Замість my-org використовуйте вашу організацію
+          # K6_INFLUXDB_BUCKET: k6-bucket          # Замість k6-bucket використовуйте ваш bucket
+          # K6_INFLUXDB_TOKEN: ${{ secrets.INFLUXDB_TOKEN }}  # Використовуйте GitHub Secrets для токена
+        run: k6 run --out influxdb=https://9e2b-92-253-236-196.ngrok-free.app test.ts

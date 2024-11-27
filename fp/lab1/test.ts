@@ -3,9 +3,9 @@ import { sleep, check } from 'k6';
 
 export let options = {
   stages: [
-    { duration: '30s', target: 10 }, // Підвищення до 10 VUs
-    { duration: '1m', target: 50 }, // Підвищення до 50 VUs
-    { duration: '1m', target: 0 },  // Спад
+    { duration: '15s', target: 10 }, // Підвищення до 10 VUs
+    // { duration: '15s', target: 50 }, // Підвищення до 50 VUs
+    // { duration: '15s', target: 0 },  // Спад
   ],
 };
 
