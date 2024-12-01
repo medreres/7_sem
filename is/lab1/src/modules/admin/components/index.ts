@@ -22,4 +22,5 @@ export const components = {
   ApproveInvoice: componentLoader.add('ApproveInvoice', './approve-invoice'),
   RejectInvoice: componentLoader.add('RejectInvoice', './reject-invoice'),
   Dashboard: componentLoader.add('Dashboard', './dashboard'),
+  PDFGenerator: componentLoader.add('GeneratePDF', './pdf-generator'),
 };
